@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="375.0" style="-fx-background-color: E8DCC3;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="vista.InicioController">
+   <children>
+      <Button fx:id="btnEntrar" layoutX="84.0" layoutY="117.0" mnemonicParsing="false" onAction="#doAcceder" prefHeight="26.0" prefWidth="208.0" style="-fx-background-color: BA2516; -fx-border-image-insets: 000000;" text="ACCEDER" textOverrun="CLIP">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="15.0" layoutY="25.0" text="INTERFAZ DE BASES DE DATOS">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnEliminarbase" layoutX="84.0" layoutY="173.0" mnemonicParsing="false" onAction="#doEliminarbase" prefHeight="26.0" prefWidth="208.0" style="-fx-background-color: BA2516; -fx-border-image-insets: 000000;" text="ELIMINAR BASE" textOverrun="CLIP">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnCrearbasedatos" layoutX="83.0" layoutY="226.0" mnemonicParsing="false" onAction="#doCrearbasedatos" prefHeight="26.0" prefWidth="208.0" style="-fx-background-color: BA2516; -fx-border-image-insets: 000000;" text="CREAR BASE DE DATOS" textOverrun="CLIP">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnSalir" layoutX="84.0" layoutY="297.0" mnemonicParsing="false" onAction="#doSalir" prefHeight="26.0" prefWidth="208.0" style="-fx-background-color: BA2516; -fx-border-image-insets: 000000;" text="SALIR" textOverrun="CLIP">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ComboBox layoutX="112.0" layoutY="73.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
