@@ -1,48 +1,68 @@
 package conexion;
 
+import com.mysql.cj.conf.PropertyKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.sql.DatabaseMetaData;
 
 
 public class Conexion {
-    String bd = "sakila";
-    String url ="jdbc:mysql://localhost:3306/";
-    String user = "root";
-    String password = "";
-    String driver = "com.mysql.cj.jdbc.Diver";
-    Connection cx ;
 
-    public Conexion(String bd) {
-        this.bd=bd;
-    }
-    public Connection conectar(){
-        try {
-            Class.forName(driver);
-            cx=DriverManager.getConnection(url+bd, user, password);
-            System.out.println("SE CONECTO A BD"+ bd);
-        } catch (ClassNotFoundException |SQLException ex) {
-            System.out.println("NO SE CONECTO A BD"+ bd);
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
-        return cx;
-    }
+    String url;
+    String user;
+    String password;
+    String driver = "com.mysql.cj.jdbc.Driver";
     
-    public void desconectar(){
-        try {
-            cx.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+
+    public Conexion(String userr, String maquina, String password, String puerto) {
+        this.url = "jdbc:mysql://" + maquina + ":" + puerto + "/";
+        this.user = userr;
+        this.password = password;
+    }
+
+    public boolean validarUsuario() {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            // Si la conexión se realiza sin excepciones, consideramos las credenciales válidas
+            System.out.println("Conectado a la base de datos: " + connection.getMetaData().getDatabaseProductName());
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+            return false;
         }
     }
+
+    public Connection conectar() {
+         try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Statement createStatement() {
+        try {
+            Connection connection = conectar();
+            if (connection != null) {
+                return connection.createStatement();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al crear el Statement: " + e.getMessage());
+        }
+        return null;
+    } 
     
-    public static void main(String[] args) {
-        Conexion conexion =new Conexion("sakila");
-        conexion.conectar();
+    public DatabaseMetaData getMetaData() throws SQLException {
+        Connection connection = conectar();
+        if (connection != null) {
+            return connection.getMetaData();
+        } else {
+            throw new SQLException("Error al obtener la conexión");
+        }
     }
                  
 }

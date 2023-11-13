@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @author sebastian
  */
-public class JavaApplication9 extends Application {
+public class Start extends Application {
 
     /**
      * @param args the command line arguments

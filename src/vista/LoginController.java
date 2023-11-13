@@ -4,12 +4,9 @@
  */
 package vista;
 
+import conexion.Conexion;
 import java.io.IOException;
-import java.sql.DriverManager;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,16 +18,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-/**
- * FXML Controller class
- *
- * @author sebastian
- */
+
+
 public class LoginController implements Initializable {
 
     @FXML
@@ -41,41 +34,63 @@ public class LoginController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private PasswordField txtPass;
-
-    Connection con;
-    PreparedStatement pst;
+    @FXML
+    private TextField txtMaquina;
+    @FXML
+    private TextField txtPuerto;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        
 
+    }    
+    
+    static Conexion conexion;
     @FXML
     private void doEntrar(ActionEvent event) {
-        try {
-
+        
+        String userr = /*txtUsuario.getText();*/ "root";
+        String password = /*txtPass.getText();*/ "12345";
+        String maquina = /*txtMaquina.getText();*/ "localhost";
+        String puerto = /*txtPuerto.getText();*/ "3306";
+        
+        
+        conexion = new Conexion(userr, maquina, password, puerto);
+        if (conexion.validarUsuario()) {
+            abrirNuevaVentana();
+        } else {
+            JOptionPane.showMessageDialog(null, "Login fallido - No se pudo establecer la conexión al motor de base de datos");
+        }
+            
+    
+    }
+    
+    private void abrirNuevaVentana() {
+        
+        try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/inicio.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
             InicioController ouControlador = loader.getController();
+            
 
             Stage stage = new Stage();
             stage.setOnCloseRequest(even -> {
                 even.consume(); 
             });
             stage.setResizable(false);
-            stage.setTitle("INICIO");
+            stage.setTitle("CARROS");
             stage.setScene(scene);
             stage.show();
 
             Stage myStage = (Stage) this.btnEntrar.getScene().getWindow();
             myStage.close();
-
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
     }
     
     
